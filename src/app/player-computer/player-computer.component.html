@@ -1,0 +1,45 @@
+<div class="game-container">
+    <div class="choices">
+      <h2>Choose your move:</h2>
+      @for (choice of choices; track choice) {
+        <button
+          [class.selected]="playerChoice === choice.name"
+          (click)="playerChoice = choice.name">
+          <img [src]="choice.image" [alt]="choice.name" class="choice-image">
+          <span>{{ choice.name }}</span>
+        </button>
+      }
+    </div>
+  
+    <div class="game-info">
+      <p>Your choice: 
+        @if (playerChoice) {
+          <img [src]="getImageForChoice(playerChoice)" [alt]="playerChoice" class="result-image">
+          {{ playerChoice }}
+        } @else {
+          Not selected
+        }
+      </p>
+      @if (computerChoice) {
+        <p>Computer's choice: 
+          <img [src]="getImageForChoice(computerChoice)" [alt]="computerChoice" class="result-image">
+          {{ computerChoice }}
+        </p>
+      }
+      @if (result) {
+        <p [class]="result.toLowerCase().includes('win') ? 'win' : result.toLowerCase().includes('tie') ? 'tie' : 'lose'">
+          {{ result }}
+        </p>
+      }
+    </div>
+  
+    <button (click)="play()" [disabled]="!playerChoice" class="play-button">Play</button>
+  
+    <div class="score">
+      <h3>Score</h3>
+      <p>Player: {{ playerScore }}</p>
+      <p>Computer: {{ computerScore }}</p>
+    </div>
+  
+    <button (click)="resetGame()" class="reset-button">Reset Game</button>
+  </div>
